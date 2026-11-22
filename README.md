@@ -67,3 +67,11 @@ Edit `src/questions.js`. The following data structures are supported: `choice`, 
 ## License
 
 Educational project. The included brochure artwork belongs to its original authors and was provided for this project; review permissions before publicly redistributing it.
+
+### Optional Windows one-click publishing workflow
+
+From PowerShell inside the unzipped project, run `./publish.ps1`. This helper checks that GitHub CLI is signed in as `morsy777`, creates a public repository, pushes the source, deploys to Vercel using the CLI and attempts to connect Git integration. Authentication/approval prompts still require your interaction. It is included because GitHub's connected app in this session does not expose a repository-creation action.
+
+### Generating the printable QR after deployment
+
+Run `python tools/make_qr.py https://YOUR-PRODUCTION-URL.vercel.app`. The script produces both a high-contrast PNG and a scalable SVG in `print-assets/`. Add either one to the brochure *after* the production URL has been verified. The supplied QR generator does not publish the application by itself.
