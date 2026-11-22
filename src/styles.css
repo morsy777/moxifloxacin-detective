@@ -37,3 +37,52 @@
 @media(max-width:920px){.credits-columns{grid-template-columns:1fr}.credits-university{display:none}.credits-section{padding-block:66px 47px}}
 @media(max-width:600px){.credits-section{padding-block:56px 42px}.credits-heading h2{font-size:36px;letter-spacing:-1.4px}.credits-heading p{font-size:12px;text-align:left}.credits-columns{gap:16px}.credits-panel-head{padding:16px;gap:11px}.credits-icon{width:42px;height:42px}.credits-icon svg{width:25px;height:25px}.credits-panel-heading h3{font-size:21px}.credits-panel-heading>span{font-size:8px}.credits-count{font-size:8px;padding:7px 9px}.credits-people{padding:13px;gap:7px}.credits-student-list{grid-template-columns:repeat(2,minmax(0,1fr))}.credits-people li{font-size:11px;min-height:52px;padding:8px 7px;gap:6px}.credits-people .credits-number{font-size:9px;flex-basis:18px}.credits-supervisor-list li{font-size:12px;min-height:43px}.credits-signoff{font-size:9px;letter-spacing:1.15px;gap:12px;margin-top:23px}}
 @media(max-width:375px){.credits-student-list{grid-template-columns:1fr}.credits-people li{font-size:12px;min-height:42px}.credits-people .credits-number{flex-basis:25px}}
+
+/* Mobile investigation dashboard: prevent stats from overflowing narrow viewports. */
+@media (max-width: 770px) {
+  .dashboard { min-width: 0; max-width: 100%; }
+  .dashboard-label { min-width: 0; text-align: center; }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    gap: clamp(6px, 2vw, 12px);
+    align-items: stretch;
+  }
+  .score-badge {
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 3px;
+    text-align: center;
+    border: 1px solid #e2eff1;
+    border-radius: 12px;
+    background: #f7fcfd;
+  }
+  .score-badge > span { font-size: 21px; line-height: 1.1; }
+  .score-badge div { min-width: 0; width: 100%; align-items: center; gap: 3px; }
+  .score-badge small {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: .25px;
+    font-size: clamp(7px, 1.7vw, 9px);
+  }
+  .score-badge strong { font-size: clamp(18px, 4.8vw, 24px); line-height: 1.15; }
+  .progress-area { width: 100%; min-width: 0; }
+}
+@media (max-width: 360px) {
+  .dashboard { padding: 12px; }
+  .metrics { gap: 6px; }
+  .score-badge { padding-inline: 2px; }
+  .score-badge small { letter-spacing: 0; }
+}
