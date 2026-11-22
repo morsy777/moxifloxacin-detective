@@ -29,6 +29,57 @@ function restoreState() {
 const categoryOf = (id) => CATEGORIES.find(c => c.id === id) || CATEGORIES[0];
 const icons = { molecule: '⬡', choice: '✳', matching: '⧉' };
 
+// Credits transcribed from the supplied Moxifloxacin brochure.
+const PROJECT_STUDENTS = [
+  'Ahmed Samir', 'Ahmed Mowafy', 'Hamed Osama', 'Habiba Mahmoud',
+  'Rahiq Mohamed', 'Razan Mohamed', 'Rana Ebrahim',
+  'Rohayem Mohsen', 'Renad Ahmed', 'Ziad Ahmed'
+];
+const PROJECT_SUPERVISORS = [
+  'Prof. Magdy Geinenah',
+  'Assoc. Prof. Sherin M. Efeky',
+  'Assoc. Prof. Wafaa Ewis',
+  'Ass. Lec. Samira Nashaat',
+  'Ass. Lec. Aya Ebrahim Sully',
+  'Dem. Noura M. Alhamaki',
+  'Dem. Nada Lotft'
+];
+
+function Credits() {
+  return <section className="credits-section" id="credits" aria-labelledby="credits-title">
+    <div className="container">
+      <div className="credits-heading">
+        <div>
+          <div className="credits-kicker"><span className="credits-spark">✦</span> THE PEOPLE BEHIND THE PROJECT <span className="credits-kicker-line"/></div>
+          <h2 id="credits-title">Made by <em>curious minds.</em></h2>
+          <p>الناس اللى كانت وراء فكرة المشروع، والمحتوى العلمى، والتجربة التعليمية.</p>
+        </div>
+        <div className="credits-university"><span className="credits-uni-mark">✳</span><div><strong>MANSOURA UNIVERSITY</strong><small>FACULTY OF PHARMACY</small></div></div>
+      </div>
+      <div className="credits-columns">
+        <article className="credits-panel credits-panel-students">
+          <div className="credits-panel-head">
+            <div className="credits-icon" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="14" cy="11" r="4"/><path d="M5 29v-4a9 9 0 0 1 18 0v4M27 13a3.5 3.5 0 0 0-1-6.8M26 20a7 7 0 0 1 5 7v2"/></svg></div>
+            <div className="credits-panel-heading"><span>PROJECT CONTRIBUTORS</span><h3>Prepared by</h3></div>
+            <span className="credits-count">10 STUDENTS</span>
+          </div>
+          <ol className="credits-people credits-student-list">{PROJECT_STUDENTS.map((name, i) => <li key={name}><span className="credits-number">{String(i+1).padStart(2,'0')}</span><span>{name}</span></li>)}</ol>
+        </article>
+        <article className="credits-panel credits-panel-supervisors">
+          <div className="credits-panel-head">
+            <div className="credits-icon" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m3 11 15-7 15 7-15 7L3 11Z"/><path d="M9 16v9c5 5 13 5 18 0v-9M33 11v13"/><circle cx="33" cy="27" r="2"/></svg></div>
+            <div className="credits-panel-heading"><span>ACADEMIC GUIDANCE</span><h3>Supervised by</h3></div>
+            <span className="credits-count">7 MENTORS</span>
+          </div>
+          <ol className="credits-people credits-supervisor-list">{PROJECT_SUPERVISORS.map((name, i) => <li key={name}><span className="credits-number">{String(i+1).padStart(2,'0')}</span><span>{name}</span></li>)}</ol>
+        </article>
+      </div>
+      <div className="credits-signoff"><span>✦</span><p>GOOD SCIENCE. GREAT TEAMWORK.</p><span>✦</span></div>
+    </div>
+  </section>;
+}
+
+
 function Brand({ small = false }) {
   return <div className={'brand ' + (small ? 'brand-small' : '')}>
     <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 50 50"><path d="M25 3 44 14v22L25 47 6 36V14Z"/><circle cx="25" cy="25" r="7"/><path d="M25 8v10M25 32v10M8 25h10M32 25h10"/></svg></span>
@@ -231,6 +282,7 @@ function App() {
         <div className="below-grid"><div><span className="hint-icon">✦</span><span>كل إجابة صحيحة +10 نقط، وBonus +5 لما توصل لـ 3 إجابات صح متتالية.</span></div><span>STAY CURIOUS. KEEP EXPLORING.</span></div>
       </section>
       <section className="container knowledge-banner"><div className="knowledge-copy"><span>THE SCIENCE BEHIND THE GAME</span><h2>Not just a quiz.<br/><em>A chemistry adventure.</em></h2><p>من قراءة الطيف للتركيب الكيميائى للاستخدام الآمن: اللعبة بتربط المعلومات ببعض وتخليك تفكر كمحقق حقيقى.</p><button onClick={()=>setAboutOpen(true)}>Explore the science <ButtonIcon name="arrow" size={18}/></button></div><div className="knowledge-photo"><img src="/assets/brochure.jpg" alt="Original Moxifloxacin educational brochure"/><span>ORIGINAL STUDY BROCHURE ↗</span></div></section>
+      <Credits/>
     </main>
     <footer id="references"><div className="container footer-inner"><Brand small/><div className="footer-info"><span>Made for learning. Designed to explore.</span><small>For educational use only — not medical advice. Schematic spectra are illustrative, not actual measured datasets.</small><div className="source-links">{SOURCES.map(s=><a key={s.url} href={s.url} rel="noopener noreferrer" target="_blank">{s.label} ↗</a>)}</div></div><a href="#cases" className="back-top">BACK TO TOP ↑</a></div></footer>
     {current && <QuizDialog key={current.id} question={current} result={result} onResolve={resolveQuestion} onContinue={continueQuestion} onClose={()=>{setActive(null);setResult(null);}}/>}
