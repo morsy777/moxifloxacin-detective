@@ -118,3 +118,92 @@
 :root[data-theme="dark"] .match-description{color:#b1d0d9;}
 :root[data-theme="dark"] .match-help,:root[data-theme="dark"] .about-note{background:#143c48;border-color:#35636c;color:#b6dbe2;}
 :root[data-theme="dark"] .about-sources a{background:#173e4d;border-color:#3d6875;color:#8de1e7;}
+
+
+/* Dark-mode credits: approved high-contrast design */
+:root[data-theme="dark"] .credits-section {
+  background:radial-gradient(circle at 57% 6%,rgba(16,184,200,.055),transparent 33%),#092735;
+  border-top-color:#185063;
+  color:#f0fafc;
+}
+:root[data-theme="dark"] .credits-heading h2 { color:#f0fafc; }
+:root[data-theme="dark"] .credits-heading h2 em { color:#10b8c8; }
+:root[data-theme="dark"] .credits-heading p { color:#b9d1d9; }
+:root[data-theme="dark"] .credits-kicker { color:#73d0dc; }
+:root[data-theme="dark"] .credits-kicker-line { background:#10b8c8; opacity:.42; }
+:root[data-theme="dark"] .credits-university {
+  background:linear-gradient(145deg,#f0fafc,#c9e2e7);
+  border-color:#b5d5dc;
+  box-shadow:0 8px 20px #00131c18;
+}
+:root[data-theme="dark"] .credits-university strong { color:#14516a; }
+:root[data-theme="dark"] .credits-university small { color:#5b8290; }
+:root[data-theme="dark"] .credits-panel {
+  background:#062633;
+  border-color:#226070;
+  box-shadow:0 22px 50px #00111b80;
+}
+:root[data-theme="dark"] .credits-panel-head {
+  background:linear-gradient(105deg,#006273,#007b89 70%,#008895);
+  border-bottom:1px solid rgba(57,206,212,.29);
+  min-height:108px;
+}
+:root[data-theme="dark"] .credits-panel-supervisors .credits-panel-head {
+  background:linear-gradient(105deg,#005464,#006d79 70%,#007884);
+}
+:root[data-theme="dark"] .credits-icon {
+  background:rgba(255,255,255,.085);
+  border-color:rgba(255,255,255,.28);
+  box-shadow:inset 0 0 16px #ffffff11;
+}
+:root[data-theme="dark"] .credits-panel-heading>span { color:#b6ecf2; }
+:root[data-theme="dark"] .credits-panel-heading h3 { color:#fff; }
+:root[data-theme="dark"] .credits-count {
+  background:#ffd26d;
+  color:#154454;
+  box-shadow:0 6px 12px #0000002b;
+}
+:root[data-theme="dark"] .credits-people li {
+  color:#f4fbff;
+  background:linear-gradient(135deg,#143f4e,#0b2d3b);
+  border-color:#367589;
+  min-height:60px;
+  border-radius:13px;
+  padding:11px 14px;
+  font-size:clamp(12px,1.12vw,15px);
+  line-height:1.45;
+  overflow-wrap:anywhere;
+  transition:border-color .18s,transform .18s,background .2s;
+}
+:root[data-theme="dark"] .credits-people li:hover {
+  border-color:#10b8c8;
+  transform:translateY(-2px);
+}
+:root[data-theme="dark"] .credits-people .credits-number {
+  flex:0 0 30px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  background:#00303e;
+  color:#ffd16b;
+  border:1px solid rgba(16,184,200,.25);
+  border-radius:7px;
+  letter-spacing:.3px;
+  font-size:12px;
+}
+:root[data-theme="dark"] .credits-supervisor-list li { min-height:53px; }
+:root[data-theme="dark"] .credits-signoff { color:#b9d1d9; }
+@media(max-width:600px) {
+  :root[data-theme="dark"] .credits-panel-head { min-height:89px; }
+  :root[data-theme="dark"] .credits-people li {
+    min-height:53px;
+    padding:9px 8px;
+    font-size:12px;
+  }
+  :root[data-theme="dark"] .credits-people .credits-number {
+    flex-basis:25px;
+    height:26px;
+    font-size:10px;
+  }
+  :root[data-theme="dark"] .credits-supervisor-list li { min-height:47px; }
+}
