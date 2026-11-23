@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { QUESTIONS, CATEGORIES, SOURCES } from './questions';
 import zones from './molecule-zones.json';
 import './styles.css';
+import './dark.css';
 
 const shuffle = (items) => {
   const result = [...items];
@@ -13,6 +14,14 @@ const shuffle = (items) => {
   return result;
 };
 const STORAGE_KEY = 'moxifloxacin-detective-v1';
+const THEME_KEY = 'moxifloxacin-theme-v1';
+function preferredTheme() {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'dark' || saved === 'light') return saved;
+  } catch {}
+  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
 const DEFAULT_STATE = () => ({ order: shuffle(QUESTIONS.map(q => q.id)), answers: {}, score: 0, streak: 0, bestStreak: 0 });
 function restoreState() {
   try {
@@ -89,6 +98,8 @@ function Brand({ small = false }) {
 function ButtonIcon({ name, size = 22 }) {
   const paths = {
     arrow: <><path d="M5 12h14M12 5l7 7-7 7"/></>,
+    sun: <><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></>,
+    moon: <><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5 8.5 8.5 0 1 0 20.5 14.4Z"/></>,
     arrowdownleft: <><path d="M17 7 7 17M7 8v9h9"/></>,
     arrowupright: <><path d="M7 17 17 7M8 7h9v9"/></>,
     refresh: <><path d="M20 11a8 8 0 1 0-2.8 6.6"/><path d="M20 4v7h-7"/></>,
@@ -206,6 +217,7 @@ function QuizDialog({ question, onClose, onResolve, onContinue, result }) {
 function ScoreBadge({ emoji, title, value }) { return <div className="score-badge"><span>{emoji}</span><div><small>{title}</small><strong>{value}</strong></div></div>; }
 
 function App() {
+  const [theme, setTheme] = useState(preferredTheme);
   const [game, setGame] = useState(restoreState);
   const [active, setActive] = useState(null);
   const [result, setResult] = useState(null);
@@ -217,6 +229,21 @@ function App() {
   const finished = completedCount === total;
   const current = useMemo(() => QUESTIONS.find(q=>q.id===active),[active]);
   useEffect(()=>{localStorage.setItem(STORAGE_KEY,JSON.stringify(game));},[game]);
+  useEffect(()=>{document.documentElement.dataset.theme=theme;},[theme]);
+  useEffect(()=>{
+    let saved=null;
+    try { saved=localStorage.getItem(THEME_KEY); } catch {}
+    if(saved==='dark'||saved==='light'||!window.matchMedia)return;
+    const media=window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange=(event)=>setTheme(event.matches?'dark':'light');
+    media.addEventListener?.('change',onChange);
+    return ()=>media.removeEventListener?.('change',onChange);
+  },[]);
+  const toggleTheme=()=>{
+    const next=theme==='dark'?'light':'dark';
+    try { localStorage.setItem(THEME_KEY,next); } catch {}
+    setTheme(next);
+  };
   useEffect(()=>{document.body.classList.toggle('modal-open',Boolean(active||aboutOpen));return ()=>document.body.classList.remove('modal-open');},[active,aboutOpen]);
   const startQuestion = (id) => { if (game.answers[id] === undefined) {setActive(id);setResult(null);} };
   const resolveQuestion = (correct) => {
@@ -241,7 +268,12 @@ function App() {
     <header className="topbar"><div className="container topbar-inner">
       <Brand/>
       <nav className="topnav"><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
-      <a href="#cases" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
+      <div className="header-actions">
+        <button className="theme-toggle" type="button" onClick={toggleTheme} title={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-label={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-pressed={theme==='dark'}>
+          <ButtonIcon name={theme==='dark'?'sun':'moon'} size={20}/>
+        </button>
+        <a href="#cases" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
+      </div>
     </div></header>
     <main>
       <div className="hero-wrap"><div className="container">

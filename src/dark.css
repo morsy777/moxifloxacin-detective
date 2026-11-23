@@ -1,0 +1,120 @@
+/* Drug Detective — production dark-mode styling. */
+:root {color-scheme:light;}
+:root[data-theme="dark"]{color-scheme:dark;color:#e9f6f8;background:#071b27;}
+:root[data-theme="dark"] body{background:#071b27;color:#e9f6f8;}
+:root[data-theme="dark"] .app-shell{background:radial-gradient(ellipse at 8% 10%,rgba(18,130,147,.16),transparent 36%),#071b27;}
+:root[data-theme="dark"] .topbar{background:#0b2633ed;border-bottom-color:#294756;backdrop-filter:blur(20px);}
+:root[data-theme="dark"] .brand-text strong{color:#f0f9fa;}
+:root[data-theme="dark"] .brand-text strong span{color:#65d5df;}
+:root[data-theme="dark"] .brand-text small{color:#87acb9;}
+:root[data-theme="dark"] .topnav a,:root[data-theme="dark"] .topnav button{color:#c2dbe0;}
+:root[data-theme="dark"] .topnav a:hover,:root[data-theme="dark"] .topnav button:hover{color:#8aeaf1;}
+:root[data-theme="dark"] .top-play{background:#155063;color:#e8fbfc;border:1px solid #286a78;}
+:root[data-theme="dark"] .top-play:hover{background:#19758a;}
+:root[data-theme="dark"] .top-play span{color:#a5edf0;}
+/* Shared theme switch */
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;direction:ltr;flex-shrink:0;}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:43px;height:43px;padding:0;border:1px solid #cfe4e9;background:#ecf7f9;color:#0f7285;border-radius:12px;box-shadow:0 4px 13px #083e4910;transition:background .2s,border-color .2s,transform .2s;}
+.theme-toggle:hover{transform:translateY(-2px);border-color:#75c1c8;}
+.theme-toggle:focus-visible{outline:3px solid #f1c76b;outline-offset:3px;}
+.theme-toggle svg{display:block;width:20px;height:20px;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+:root[data-theme="dark"] .theme-toggle{background:#173b4c;border-color:#356273;color:#ffd77d;box-shadow:0 4px 18px #051a2345;}
+:root[data-theme="dark"] .theme-toggle:hover{background:#215365;border-color:#71c7d0;}
+@media(max-width:770px){.header-actions{gap:7px;}.theme-toggle{width:39px;height:39px;border-radius:11px;}}
+@media(max-width:430px){.topbar-inner{gap:9px;}.header-actions{gap:6px;}.header-actions .top-play{width:40px;height:39px;display:grid;place-items:center;padding:0;font-size:0;}.header-actions .top-play span{margin:0;display:grid;place-items:center;font-size:16px;}}
+/* Hero */
+:root[data-theme="dark"] .hero-wrap{background:linear-gradient(118deg,#0a2734 0%,#103745 46%,#082633 100%);border-bottom-color:#234552;}
+:root[data-theme="dark"] .hero-wrap::before{opacity:.16;}
+:root[data-theme="dark"] .hero h1{color:#f3fafb;}
+:root[data-theme="dark"] .hero h1 em{color:#80e2e5;}
+:root[data-theme="dark"] .hero h1 em span{color:#f3ca68;}
+:root[data-theme="dark"] .hero-copy p{color:#b4d2d9;}
+:root[data-theme="dark"] .hero-copy p strong{color:#f5fbfc;}
+:root[data-theme="dark"] .eyebrow,:root[data-theme="dark"] .hero-caption,:root[data-theme="dark"] .hero-molecule-title span,:root[data-theme="dark"] .hero-molecule-title small{color:#93bbc5;}
+:root[data-theme="dark"] .eyebrow-line{background:#3d7b88;}
+:root[data-theme="dark"] .text-cta{color:#9bdee2;}
+:root[data-theme="dark"] .text-cta:hover{color:#ecffff;}
+:root[data-theme="dark"] .hero-cta{background:#1596aa;color:#ffffff;box-shadow:0 14px 26px #03182285;}
+:root[data-theme="dark"] .arrow-disc{background:#f2ca6a;color:#113e4b;}
+:root[data-theme="dark"] .hero-orbit{background:radial-gradient(circle,#28718030 0%,transparent 70%);}
+:root[data-theme="dark"] .orbit-ring{border-color:#36778580;}
+:root[data-theme="dark"] .hero-image{background:#e9f5f5;border-color:#447484;box-shadow:0 25px 70px #00101980;}
+:root[data-theme="dark"] .molecule-stamp{background:#143544f5;border-color:#3a6675;color:#84e5ec;box-shadow:0 10px 30px #02182170;}
+:root[data-theme="dark"] .molecule-stamp span{color:#a6c3cb;}
+:root[data-theme="dark"] .hero-molecule-title strong{color:#a0e8ed;}
+/* Investigation dashboard */
+:root[data-theme="dark"] .dashboard{background:#102c39;border-color:#2b4b59;box-shadow:0 20px 55px #020f1890;}
+:root[data-theme="dark"] .dashboard-label{color:#9fc6ce;}
+:root[data-theme="dark"] .dashboard-label strong{background:#123d39;color:#7be3bd;}
+:root[data-theme="dark"] .score-badge small,:root[data-theme="dark"] .progress-head{color:#9dbbc3;}
+:root[data-theme="dark"] .score-badge strong{color:#f2fafb;}
+:root[data-theme="dark"] .progress-track{background:#2a4855;}
+:root[data-theme="dark"] .progress-head strong{color:#75dce4;}
+@media(max-width:770px){:root[data-theme="dark"] .score-badge{background:#143744;border-color:#32535f;}}
+/* Evidence board */
+:root[data-theme="dark"] .section-kicker,:root[data-theme="dark"] .shuffle-label{color:#8bbcc6;}
+:root[data-theme="dark"] .dash{background:#3b6c79;}
+:root[data-theme="dark"] .section-top h2{color:#effafb;}
+:root[data-theme="dark"] .section-top h2 em{color:#79dee8;}
+:root[data-theme="dark"] .section-top p,:root[data-theme="dark"] .below-grid,:root[data-theme="dark"] .below-grid div{color:#9ebfc7;}
+:root[data-theme="dark"] .restart{background:#163a49;border-color:#355b66;color:#d5ebed;}
+:root[data-theme="dark"] .restart:hover{background:#215361;}
+:root[data-theme="dark"] .topic{background:#0e2d3a;border-color:#2b505c;}
+:root[data-theme="dark"] .topic strong{color:#e2f4f6;}
+:root[data-theme="dark"] .topic small{color:#90b9c1;}
+:root[data-theme="dark"] .topic-icon{background:#173b49;}
+:root[data-theme="dark"] .case-card{background:linear-gradient(145deg,#142f3d 0%,#102937 100%);border-color:#2e5360;box-shadow:0 6px 18px #03172170;}
+:root[data-theme="dark"] .case-card:hover:not(:disabled){border-color:#56c2ce;box-shadow:0 17px 30px #021820b3;}
+:root[data-theme="dark"] .case-card::before{background:radial-gradient(ellipse at 55% 60%,color-mix(in srgb,var(--card-color) 20%,transparent),transparent 65%);}
+:root[data-theme="dark"] .card-top{color:#8cb3bc;}
+:root[data-theme="dark"] .card-dots{color:#5a929f;}
+:root[data-theme="dark"] .card-ring{border-color:#4f7981;}
+:root[data-theme="dark"] .card-pattern{opacity:.65;}
+:root[data-theme="dark"] .card-category{color:#d3edf0;}
+:root[data-theme="dark"] .card-action{color:#7ed8df;}
+:root[data-theme="dark"] .card-action .card-arrow,:root[data-theme="dark"] .card-action-icon{background:#1b4955;border-color:#376c79;color:#9ee6ea;}
+:root[data-theme="dark"] .case-done{background:#17323b;opacity:.62;}
+:root[data-theme="dark"] .hint-icon{color:#e6be63;}
+/* Results, science banner, footer and credits */
+:root[data-theme="dark"] .final-panel{background:linear-gradient(125deg,#133b49,#0b2c39);border-color:#2c6771;color:#d9f4f5;}
+:root[data-theme="dark"] .final-panel h3,:root[data-theme="dark"] .final-score{color:#f2fafb;}
+:root[data-theme="dark"] .final-panel p,:root[data-theme="dark"] .final-stats{color:#a2c6cf;}
+:root[data-theme="dark"] .knowledge-banner{background:linear-gradient(115deg,#0a3b4d,#0b5364);border:1px solid #285d69;}
+:root[data-theme="dark"] footer{background:#071c27;border-top-color:#234654;}
+:root[data-theme="dark"] .footer-info{color:#96bbc4;}
+:root[data-theme="dark"] .source-links a,:root[data-theme="dark"] .back-top{color:#7ad9e2;}
+:root[data-theme="dark"] .credits-section{background:#0b2633;color:#e9f5f7;}
+:root[data-theme="dark"] .credits-heading h2{color:#f1fbfc;}
+:root[data-theme="dark"] .credits-heading p,:root[data-theme="dark"] .credits-people li{color:#b5d1d9;}
+:root[data-theme="dark"] .credits-panel{background:#123343;border-color:#315363;box-shadow:0 15px 36px #04172185;}
+:root[data-theme="dark"] .credits-panel-head{border-color:#3b6070;}
+:root[data-theme="dark"] .credits-people .credits-number{background:#21495a;color:#83d6df;}
+:root[data-theme="dark"] .credits-signoff{color:#e7bd67;}
+/* Modal questions, spectra and answers */
+:root[data-theme="dark"] .dialog-overlay{background:#030e17dc;}
+:root[data-theme="dark"] .dialog-card,:root[data-theme="dark"] .about-dialog{background:#102e3b;color:#ebf7f8;border:1px solid #365a69;}
+:root[data-theme="dark"] .dialog-top,:root[data-theme="dark"] .dialog-actions{border-color:#2c5160;}
+:root[data-theme="dark"] .dialog-category,:root[data-theme="dark"] .case-index{color:#a4c6cc;}
+:root[data-theme="dark"] .dialog-title,:root[data-theme="dark"] .about-dialog h2{color:#f5fbfc;}
+:root[data-theme="dark"] .dialog-question,:root[data-theme="dark"] .about-dialog p{color:#c4dce0;}
+:root[data-theme="dark"] .answer-btn,:root[data-theme="dark"] .match-tile{background:#173b4a;border-color:#375a67;color:#dceef0;}
+:root[data-theme="dark"] .answer-btn:not(:disabled):hover,:root[data-theme="dark"] .match-tile:hover{background:#245362;border-color:#5ccad5;}
+:root[data-theme="dark"] .answer-index{background:#275365;color:#a3e9ed;}
+:root[data-theme="dark"] .right-answer{background:#113e37;border-color:#3caa7d;color:#a7f0c7;}
+:root[data-theme="dark"] .wrong-answer{background:#4b2533;border-color:#da8490;color:#ffc6cb;}
+:root[data-theme="dark"] .right-answer .answer-index{background:#1f8d65;color:white;}
+:root[data-theme="dark"] .wrong-answer .answer-index{background:#aa455b;color:white;}
+:root[data-theme="dark"] .feedback-success{background:#113b34;border-color:#2b8265;color:#adf1cb;}
+:root[data-theme="dark"] .feedback-error{background:#3e2631;border-color:#925365;color:#fac6d0;}
+:root[data-theme="dark"] .icon-button{background:#173d4b;border-color:#375f6c;color:#b1d7df;}
+:root[data-theme="dark"] .icon-button:hover{background:#245a68;}
+:root[data-theme="dark"] .molecule-frame,:root[data-theme="dark"] .spectrum-frame,:root[data-theme="dark"] .match-area{background:#143643;border-color:#385e6d;}
+:root[data-theme="dark"] .molecule-head,:root[data-theme="dark"] .spectrum-topline,:root[data-theme="dark"] .match-instructions{color:#b5d4da;}
+:root[data-theme="dark"] .molecule-canvas,:root[data-theme="dark"] .about-structure{background:#e9f4f5;border:1px solid #4f7d87;}
+:root[data-theme="dark"] .grid-lines path{stroke:#2c5565;}
+:root[data-theme="dark"] .axis-line{stroke:#86b7c3;}
+:root[data-theme="dark"] .axis-labels text{fill:#9cbbc2;}
+:root[data-theme="dark"] .match-column{background:#102b38;border-color:#325564;}
+:root[data-theme="dark"] .match-description{color:#b1d0d9;}
+:root[data-theme="dark"] .match-help,:root[data-theme="dark"] .about-note{background:#143c48;border-color:#35636c;color:#b6dbe2;}
+:root[data-theme="dark"] .about-sources a{background:#173e4d;border-color:#3d6875;color:#8de1e7;}
