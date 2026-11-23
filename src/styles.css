@@ -86,3 +86,33 @@
   .score-badge { padding-inline: 2px; }
   .score-badge small { letter-spacing: 0; }
 }
+
+/* Consistent vector arrows across iOS, Android and desktop */
+.top-play-arrow svg,
+.arrow-disc svg,
+.card-arrow svg { display:block; flex-shrink:0; }
+.top-play .top-play-arrow { display:inline-grid; place-items:center; vertical-align:middle; }
+.arrow-disc { flex-shrink:0; }
+.card-action { min-width:0; }
+.card-action .card-arrow {
+  width:22px;
+  height:22px;
+  border-radius:7px;
+  background:rgba(19,141,160,.10);
+  border:1px solid rgba(19,141,160,.13);
+  color:#0b8294;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.case-card:not(:disabled):hover .card-arrow {
+  background:rgba(19,141,160,.17);
+  border-color:rgba(19,141,160,.30);
+}
+@media(max-width:490px){
+  .card-bottom { gap:5px; }
+  .card-action { gap:4px; flex-shrink:0; white-space:nowrap; }
+  .card-action .card-arrow { width:21px; height:21px; border-radius:6px; }
+  .card-category { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+}

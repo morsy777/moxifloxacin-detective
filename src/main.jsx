@@ -89,6 +89,8 @@ function Brand({ small = false }) {
 function ButtonIcon({ name, size = 22 }) {
   const paths = {
     arrow: <><path d="M5 12h14M12 5l7 7-7 7"/></>,
+    arrowdownleft: <><path d="M17 7 7 17M7 8v9h9"/></>,
+    arrowupright: <><path d="M7 17 17 7M8 7h9v9"/></>,
     refresh: <><path d="M20 11a8 8 0 1 0-2.8 6.6"/><path d="M20 4v7h-7"/></>,
     close: <><path d="M6 6 18 18M18 6 6 18"/></>,
     book: <><path d="M3 6.5C6 5 9 5 12 7c3-2 6-2 9-.5v12c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z"/><path d="M12 7v13"/></>,
@@ -239,7 +241,7 @@ function App() {
     <header className="topbar"><div className="container topbar-inner">
       <Brand/>
       <nav className="topnav"><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
-      <a href="#cases" className="top-play">Start exploring <span>↙</span></a>
+      <a href="#cases" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
     </div></header>
     <main>
       <div className="hero-wrap"><div className="container">
@@ -248,7 +250,7 @@ function App() {
             <div className="eyebrow"><span className="eyebrow-star">✦</span> THE INTERACTIVE CHEMISTRY EXPERIENCE <span className="eyebrow-line"/></div>
             <h1 dir="ltr">Every molecule<br/> <em>tells a story<span>.</span></em></h1>
             <p>هل تقدر تحل لغز <strong>Moxifloxacin</strong>؟ افتح الكروت، فك شفرات الأطياف، اكتشف الحلقات الكيميائية، واجمع أكبر عدد من النقط.</p>
-            <div className="hero-actions"><a href="#cases" className="hero-cta">ابدأ التحقيق <span className="arrow-disc">↙</span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
+            <div className="hero-actions"><a href="#cases" className="hero-cta">ابدأ التحقيق <span className="arrow-disc"><ButtonIcon name="arrowdownleft" size={19}/></span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
             <div className="hero-caption"><span className="caption-dots"><b/><b/><b/></span><span>20 CASE FILES</span><i/> <span>5 SCIENCE LABS</span><i/> <span>100% INTERACTIVE</span></div>
           </div>
           <div className="hero-art">
@@ -275,7 +277,7 @@ function App() {
             return <button key={id} type="button" className={'case-card ' + (isDone ? 'case-done ' : '')} style={{'--card-color':c.tint,'--index':index}} onClick={()=>startQuestion(id)} disabled={isDone} aria-label={isDone ? `Case completed: ${q.title}`:`افتح ملف: ${c.ar}`}>
               <span className="card-top"><span>CASE {String(index+1).padStart(2,'0')}</span><span className="card-dots">•••</span></span>
               <span className="card-center"><span className="card-pattern">{c.icon}</span><span className="card-symbol">{isDone?(won?'✓':'−'):'?'}</span><span className="card-ring"/></span>
-              <span className="card-bottom"><span className="card-category">{c.label}</span><span className="card-action">{isDone ? (won?'SOLVED':'REVIEWED') : 'TAP TO REVEAL'} <span>{isDone?'✓':'↗'}</span></span></span>
+              <span className="card-bottom"><span className="card-category">{c.label}</span><span className="card-action">{isDone ? (won?'SOLVED':'REVIEWED') : 'TAP TO REVEAL'} <span className="card-arrow" aria-hidden="true">{isDone?<ButtonIcon name="check" size={14}/>:<ButtonIcon name="arrowupright" size={14}/>}</span></span></span>
             </button>;
           })}
         </div>
