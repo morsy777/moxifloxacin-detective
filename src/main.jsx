@@ -40,7 +40,7 @@ const icons = { molecule: '⬡', choice: '✳', matching: '⧉' };
 
 // Credits transcribed from the supplied Moxifloxacin brochure.
 const PROJECT_STUDENTS = [
-  'Ahmed Samir', 'Ahmed Mowafy', 'Hamed Osama', 'Habiba Mahmoud',
+  'Ahmed Samir', 'Hamed Osama', 'Habiba Mahmoud',
   'Rahiq Mohamed', 'Razan Mohamed', 'Rana Ebrahim',
   'Rohayem Mohsen', 'Renad Ahmed', 'Ziad Ahmed'
 ];
@@ -70,7 +70,7 @@ function Credits() {
           <div className="credits-panel-head">
             <div className="credits-icon" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="14" cy="11" r="4"/><path d="M5 29v-4a9 9 0 0 1 18 0v4M27 13a3.5 3.5 0 0 0-1-6.8M26 20a7 7 0 0 1 5 7v2"/></svg></div>
             <div className="credits-panel-heading"><span>PROJECT CONTRIBUTORS</span><h3>Prepared by</h3></div>
-            <span className="credits-count">10 STUDENTS</span>
+            <span className="credits-count">{PROJECT_STUDENTS.length} STUDENTS</span>
           </div>
           <ol className="credits-people credits-student-list">{PROJECT_STUDENTS.map((name, i) => <li key={name}><span className="credits-number">{String(i+1).padStart(2,'0')}</span><span>{name}</span></li>)}</ol>
         </article>
@@ -216,6 +216,38 @@ function QuizDialog({ question, onClose, onResolve, onContinue, result }) {
 
 function ScoreBadge({ emoji, title, value }) { return <div className="score-badge"><span>{emoji}</span><div><small>{title}</small><strong>{value}</strong></div></div>; }
 
+function EscapeLab({theme}) {
+  const frame=React.useRef(null);
+  const [height,setHeight]=useState(1100);
+  const [modal,setModal]=useState(false);
+  const themeRef=React.useRef(theme);
+  themeRef.current=theme;
+  const send=()=>frame.current?.contentWindow?.postMessage({type:'escape-theme',theme:themeRef.current},window.location.origin);
+  const measure=()=>frame.current?.contentWindow?.postMessage({type:'escape-measure'},window.location.origin);
+  useEffect(()=>{
+    const handler=(e)=>{
+      if(e.origin!==window.location.origin||e.source!==frame.current?.contentWindow)return;
+      const d=e.data;
+      if(d?.type==='escape-size'&&Number.isFinite(d.height)&&d.height>0&&d.height<20000)setHeight(d.height);
+      if(d?.type==='escape-modal')setModal(d.open===true);
+      if(d?.type==='escape-ready'){send();measure();}
+    };
+    window.addEventListener('message',handler);
+    return ()=>window.removeEventListener('message',handler);
+  },[]);
+  useEffect(()=>{send();},[theme]);
+  useEffect(()=>{
+    document.body.classList.toggle('escape-modal-open',modal);
+    if(!modal){const timer=setTimeout(measure,120);return ()=>clearTimeout(timer);}
+    return ()=>document.body.classList.remove('escape-modal-open');
+  },[modal]);
+  return <section className="escape-embed" id="escape-lab" aria-label="Escape the Chemistry Lab">
+    <div className="escape-frame-slot" style={{height}}>
+      <iframe ref={frame} title="Escape the Chemistry Lab" src="/escape-lab.html" onLoad={()=>{send();measure();}} className={'escape-frame'+(modal?' escape-frame-modal':'')} />
+    </div>
+  </section>;
+}
+
 function App() {
   const [theme, setTheme] = useState(preferredTheme);
   const [game, setGame] = useState(restoreState);
@@ -267,12 +299,12 @@ function App() {
   return <div className="app-shell">
     <header className="topbar"><div className="container topbar-inner">
       <Brand/>
-      <nav className="topnav"><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
+      <nav className="topnav"><a href="#escape-lab">Escape the Lab</a><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
       <div className="header-actions">
         <button className="theme-toggle" type="button" onClick={toggleTheme} title={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-label={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-pressed={theme==='dark'}>
           <ButtonIcon name={theme==='dark'?'sun':'moon'} size={20}/>
         </button>
-        <a href="#cases" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
+        <a href="#escape-lab" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
       </div>
     </div></header>
     <main>
@@ -282,7 +314,7 @@ function App() {
             <div className="eyebrow"><span className="eyebrow-star">✦</span> THE INTERACTIVE CHEMISTRY EXPERIENCE <span className="eyebrow-line"/></div>
             <h1 dir="ltr">Every molecule<br/> <em>tells a story<span>.</span></em></h1>
             <p>هل تقدر تحل لغز <strong>Moxifloxacin</strong>؟ افتح الكروت، فك شفرات الأطياف، اكتشف الحلقات الكيميائية، واجمع أكبر عدد من النقط.</p>
-            <div className="hero-actions"><a href="#cases" className="hero-cta">ابدأ التحقيق <span className="arrow-disc"><ButtonIcon name="arrowdownleft" size={19}/></span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
+            <div className="hero-actions"><a href="#escape-lab" className="hero-cta">ابدأ التحقيق <span className="arrow-disc"><ButtonIcon name="arrowdownleft" size={19}/></span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
             <div className="hero-caption"><span className="caption-dots"><b/><b/><b/></span><span>20 CASE FILES</span><i/> <span>5 SCIENCE LABS</span><i/> <span>100% INTERACTIVE</span></div>
           </div>
           <div className="hero-art">
@@ -293,6 +325,7 @@ function App() {
           </div>
         </section>
       </div></div>
+      <EscapeLab theme={theme}/>
       <div className="container"><section className="dashboard" aria-label="Game statistics">
         <div className="dashboard-label"><div className="live-dot"/><span>YOUR INVESTIGATION</span><strong>{finished ? 'CASE CLOSED' : 'IN PROGRESS'}</strong></div>
         <div className="metrics"><ScoreBadge emoji="✦" title="YOUR POINTS" value={game.score}/><ScoreBadge emoji="♨" title="CURRENT STREAK" value={game.streak}/><ScoreBadge emoji="◈" title="CASES SOLVED" value={`${completedCount}/${total}`}/></div>

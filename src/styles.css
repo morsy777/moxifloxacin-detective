@@ -116,3 +116,12 @@
   .card-action .card-arrow { width:21px; height:21px; border-radius:6px; }
   .card-category { min-width:0; overflow:hidden; text-overflow:ellipsis; }
 }
+
+/* Escape mode appears before the original evidence board. */
+.escape-embed{position:relative;scroll-margin-top:90px;padding-top:24px;padding-bottom:62px}
+.escape-frame-slot{width:100%;position:relative;min-width:0}
+.escape-frame{display:block;width:100%;height:100%;border:0;background:transparent}
+.escape-frame-modal{position:fixed;inset:0;width:100%;height:100dvh;z-index:1000}
+body.escape-modal-open{overflow:hidden}
+@media(max-width:770px){.escape-embed{scroll-margin-top:12px;padding-top:12px;padding-bottom:44px}}
+@media(min-width:771px) and (max-width:1250px){.topnav{gap:10px}.topnav a,.topnav button{font-size:11px}}
