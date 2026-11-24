@@ -40,7 +40,7 @@ const icons = { molecule: '⬡', choice: '✳', matching: '⧉' };
 
 // Credits transcribed from the supplied Moxifloxacin brochure.
 const PROJECT_STUDENTS = [
-  'Ahmed Samir', 'Hamed Osama', 'Habiba Mahmoud',
+  'Ahmed Samir', 'Ahmed Mowafy', 'Hamed Osama', 'Habiba Mahmoud',
   'Rahiq Mohamed', 'Razan Mohamed', 'Rana Ebrahim',
   'Rohayem Mohsen', 'Renad Ahmed', 'Ziad Ahmed'
 ];
