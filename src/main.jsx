@@ -97,6 +97,8 @@ function Brand({ small = false }) {
 }
 function ButtonIcon({ name, size = 22 }) {
   const paths = {
+    wheel: <><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/><circle cx="12" cy="12" r="2" fill="currentColor"/></>,
+    layers: <><rect x="6" y="3" width="13" height="15" rx="2"/><path d="M15 21H5a2 2 0 0 1-2-2V8"/></>,
     arrow: <><path d="M5 12h14M12 5l7 7-7 7"/></>,
     sun: <><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></>,
     moon: <><path d="M20.5 14.4A8.5 8.5 0 0 1 9.6 3.5 8.5 8.5 0 1 0 20.5 14.4Z"/></>,
@@ -216,36 +218,51 @@ function QuizDialog({ question, onClose, onResolve, onContinue, result }) {
 
 function ScoreBadge({ emoji, title, value }) { return <div className="score-badge"><span>{emoji}</span><div><small>{title}</small><strong>{value}</strong></div></div>; }
 
-function EscapeLab({theme}) {
+function EmbeddedGame({theme,mode,id,title,src}) {
   const frame=React.useRef(null);
   const [height,setHeight]=useState(1100);
   const [modal,setModal]=useState(false);
   const themeRef=React.useRef(theme);
   themeRef.current=theme;
-  const send=()=>frame.current?.contentWindow?.postMessage({type:'escape-theme',theme:themeRef.current},window.location.origin);
-  const measure=()=>frame.current?.contentWindow?.postMessage({type:'escape-measure'},window.location.origin);
+  const send=()=>frame.current?.contentWindow?.postMessage({type:mode+'-theme',theme:themeRef.current},window.location.origin);
+  const measure=()=>frame.current?.contentWindow?.postMessage({type:mode+'-measure'},window.location.origin);
   useEffect(()=>{
     const handler=(e)=>{
       if(e.origin!==window.location.origin||e.source!==frame.current?.contentWindow)return;
       const d=e.data;
-      if(d?.type==='escape-size'&&Number.isFinite(d.height)&&d.height>0&&d.height<20000)setHeight(d.height);
-      if(d?.type==='escape-modal')setModal(d.open===true);
-      if(d?.type==='escape-ready'){send();measure();}
+      if(d?.type===mode+'-size'&&Number.isFinite(d.height)&&d.height>0&&d.height<20000)setHeight(d.height);
+      if(d?.type===mode+'-modal')setModal(d.open===true);
+      if(d?.type===mode+'-ready'){send();measure();}
     };
     window.addEventListener('message',handler);
     return ()=>window.removeEventListener('message',handler);
-  },[]);
-  useEffect(()=>{send();},[theme]);
+  },[mode]);
+  useEffect(()=>{send();},[theme,mode]);
   useEffect(()=>{
-    document.body.classList.toggle('escape-modal-open',modal);
+    const className=mode+'-modal-open';
+    document.body.classList.toggle(className,modal);
     if(!modal){const timer=setTimeout(measure,120);return ()=>clearTimeout(timer);}
-    return ()=>document.body.classList.remove('escape-modal-open');
-  },[modal]);
-  return <section className="escape-embed" id="escape-lab" aria-label="Escape the Chemistry Lab">
+    return ()=>document.body.classList.remove(className);
+  },[modal,mode]);
+  return <section className="escape-embed" id={id} aria-label={title}>
     <div className="escape-frame-slot" style={{height}}>
-      <iframe ref={frame} title="Escape the Chemistry Lab" src="/escape-lab.html" onLoad={()=>{send();measure();}} className={'escape-frame'+(modal?' escape-frame-modal':'')} />
+      <iframe ref={frame} title={title} src={src} onLoad={()=>{send();measure();}} className={'escape-frame'+(modal?' escape-frame-modal':'')} />
     </div>
   </section>;
+}
+
+function GameNavigation(){
+  const games=[
+    {id:'lucky-spin',title:'Lucky Spin',icon:'wheel'},
+    {id:'escape-lab',title:'Escape Lab',icon:'lock'},
+    {id:'cases',title:'Case Files',icon:'layers'}
+  ];
+  return <nav className="container game-navigation" aria-label="Choose your mission">
+    <div className="game-nav-heading"><span>✦</span> CHOOSE YOUR MISSION</div>
+    <div className="game-nav-grid">{games.map((game,i)=><a key={game.id} className={'game-nav-link'+(i===0?' game-nav-featured':'')} href={'#'+game.id}>
+      <ButtonIcon name={game.icon} size={26}/><strong>{game.title}</strong><small>0{i+1}</small>
+    </a>)}</div>
+  </nav>;
 }
 
 function App() {
@@ -299,12 +316,12 @@ function App() {
   return <div className="app-shell">
     <header className="topbar"><div className="container topbar-inner">
       <Brand/>
-      <nav className="topnav"><a href="#escape-lab">Escape the Lab</a><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
+      <nav className="topnav"><a href="#lucky-spin">Lucky Spin</a><a href="#escape-lab">Escape the Lab</a><a href="#cases">The Case Files</a><button onClick={()=>setAboutOpen(true)}>About the Drug</button><a className="nav-reference" href="#references">References <span>↗</span></a></nav>
       <div className="header-actions">
         <button className="theme-toggle" type="button" onClick={toggleTheme} title={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-label={theme==='dark'?'Switch to light mode':'Switch to dark mode'} aria-pressed={theme==='dark'}>
           <ButtonIcon name={theme==='dark'?'sun':'moon'} size={20}/>
         </button>
-        <a href="#escape-lab" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
+        <a href="#lucky-spin" className="top-play">Start exploring <span className="top-play-arrow"><ButtonIcon name="arrowdownleft" size={17}/></span></a>
       </div>
     </div></header>
     <main>
@@ -314,7 +331,7 @@ function App() {
             <div className="eyebrow"><span className="eyebrow-star">✦</span> THE INTERACTIVE CHEMISTRY EXPERIENCE <span className="eyebrow-line"/></div>
             <h1 dir="ltr">Every molecule<br/> <em>tells a story<span>.</span></em></h1>
             <p>هل تقدر تحل لغز <strong>Moxifloxacin</strong>؟ افتح الكروت، فك شفرات الأطياف، اكتشف الحلقات الكيميائية، واجمع أكبر عدد من النقط.</p>
-            <div className="hero-actions"><a href="#escape-lab" className="hero-cta">ابدأ التحقيق <span className="arrow-disc"><ButtonIcon name="arrowdownleft" size={19}/></span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
+            <div className="hero-actions"><a href="#lucky-spin" className="hero-cta">ابدأ التحقيق <span className="arrow-disc"><ButtonIcon name="arrowdownleft" size={19}/></span></a><button className="text-cta" onClick={()=>setAboutOpen(true)}><ButtonIcon name="book" size={18}/> اكتشف المركب</button></div>
             <div className="hero-caption"><span className="caption-dots"><b/><b/><b/></span><span>20 CASE FILES</span><i/> <span>5 SCIENCE LABS</span><i/> <span>100% INTERACTIVE</span></div>
           </div>
           <div className="hero-art">
@@ -325,14 +342,16 @@ function App() {
           </div>
         </section>
       </div></div>
-      <EscapeLab theme={theme}/>
+      <GameNavigation/>
+      <EmbeddedGame theme={theme} mode="lucky" id="lucky-spin" title="Lucky Spin — Spin the Science" src="/lucky-spin.html"/>
+      <EmbeddedGame theme={theme} mode="escape" id="escape-lab" title="Escape the Chemistry Lab" src="/escape-lab.html"/>
       <div className="container"><section className="dashboard" aria-label="Game statistics">
         <div className="dashboard-label"><div className="live-dot"/><span>YOUR INVESTIGATION</span><strong>{finished ? 'CASE CLOSED' : 'IN PROGRESS'}</strong></div>
         <div className="metrics"><ScoreBadge emoji="✦" title="YOUR POINTS" value={game.score}/><ScoreBadge emoji="♨" title="CURRENT STREAK" value={game.streak}/><ScoreBadge emoji="◈" title="CASES SOLVED" value={`${completedCount}/${total}`}/></div>
         <div className="progress-area"><div className="progress-head"><span>CASE COMPLETION</span><strong>{percent}%</strong></div><div className="progress-track"><div className="progress-fill" style={{width:percent+'%'}}/></div></div>
       </section></div>
       <section className="container game-section" id="cases">
-        <div className="section-top"><div><div className="section-kicker"><span>01 / THE MISSION</span><div className="dash"/></div><h2>The <em>Evidence Board</em><span className="tiny-star"> ✳</span></h2><p>وراء كل كارت دليل جديد. اختار أى كارت عشوائى، جاوب، وشوف ترتيب الكروت بيتغير قدامك.</p></div>
+        <div className="section-top"><div><div className="section-kicker"><span>03 / THE MISSION</span><div className="dash"/></div><h2>The <em>Evidence Board</em><span className="tiny-star"> ✳</span></h2><p>وراء كل كارت دليل جديد. اختار أى كارت عشوائى، جاوب، وشوف ترتيب الكروت بيتغير قدامك.</p></div>
           <div className="section-tools"><span className="shuffle-label"><ButtonIcon name="refresh" size={17}/> AUTO-SHUFFLE IS ON</span><button onClick={resetGame} className="restart"><ButtonIcon name="refresh" size={18}/> Restart</button></div></div>
         <div className="topic-strip">{CATEGORIES.map(c => {const solved=QUESTIONS.filter(q=>q.category===c.id && game.answers[q.id]!==undefined).length;const count=QUESTIONS.filter(q=>q.category===c.id).length;return <div key={c.id} className="topic"><span className="topic-icon" style={{'--cat':c.tint}}>{c.icon}</span><div><strong>{c.label}</strong><small>{solved}/{count} solved</small></div></div>})}</div>
         {finished ? <div className="final-panel"><div className="final-glow">✦</div><div className="final-trophy">🏆</div><div className="final-label">INVESTIGATION COMPLETE</div><h3 dir="ltr">Case closed. <em>Brilliant work!</em></h3><p>خلصت كل الملفات! نتيجتك النهائية:</p><strong className="final-score">{game.score} <small>PTS</small></strong><div className="final-stats"><span>{Object.values(game.answers).filter(Boolean).length} / {total} correct answers</span><span>Best streak: {game.bestStreak}</span></div><button className="hero-cta" onClick={resetGame}>العب من جديد ↻</button></div> : null}

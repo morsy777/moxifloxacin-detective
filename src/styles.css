@@ -125,3 +125,26 @@
 body.escape-modal-open{overflow:hidden}
 @media(max-width:770px){.escape-embed{scroll-margin-top:12px;padding-top:12px;padding-bottom:44px}}
 @media(min-width:771px) and (max-width:1250px){.topnav{gap:10px}.topnav a,.topnav button{font-size:11px}}
+
+/* Three-game navigation and independently scoped modal scroll locks */
+body.lucky-modal-open{overflow:hidden}
+.game-navigation{padding-block:18px 14px}
+.game-nav-heading{font:800 11px 'DM Sans',sans-serif;letter-spacing:2px;color:#547680;text-align:center;margin-bottom:14px}
+.game-nav-heading span{color:#0b8998;margin-right:4px}
+.game-nav-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(7px,1.3vw,16px);max-width:960px;margin:auto}
+.game-nav-link{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;min-width:0;min-height:76px;border-radius:14px;padding:14px 24px;color:#123b48;background:#fff;border:1px solid #c8e3e7;box-shadow:0 8px 24px #13566e0b;transition:transform .2s,border-color .2s}
+.game-nav-link:hover{transform:translateY(-3px);border-color:#0a9bac}
+.game-nav-link svg{flex:none;color:#0b8998}
+.game-nav-link strong{font:700 clamp(12px,1.55vw,17px) 'DM Sans',sans-serif;line-height:1.3;text-align:center;overflow-wrap:anywhere}
+.game-nav-link small{position:absolute;top:6px;right:9px;font:700 10px 'DM Sans',sans-serif;color:#527782}
+.game-nav-featured{background:#f5ce73;border-color:#dfb65c;color:#123b48}
+.game-nav-featured svg,.game-nav-featured small{color:#123b48}
+:root[data-theme="dark"] .game-nav-heading{color:#a0bec9}
+:root[data-theme="dark"] .game-nav-heading span{color:#69dce0}
+:root[data-theme="dark"] .game-nav-link:not(.game-nav-featured){background:#123744;color:#edf8fa;border-color:#285261}
+:root[data-theme="dark"] .game-nav-link:not(.game-nav-featured) svg{color:#69dce0}
+:root[data-theme="dark"] .game-nav-link:not(.game-nav-featured) small{color:#a0bec9}
+#cases{scroll-margin-top:24px}
+@media(max-width:700px){.game-navigation{padding-inline:16px;padding-top:12px}.game-nav-link{min-height:88px;flex-direction:column;gap:7px;padding:15px 4px 8px}.game-nav-link svg{width:23px;height:23px}.game-nav-link small{font-size:9px;top:4px;right:5px}}
+@media(min-width:1100px) and (max-width:1420px){.topnav{gap:12px;white-space:nowrap}.topnav a,.topnav button{font-size:11px}.topbar-inner{gap:14px}}
+@media(min-width:771px) and (max-width:1099px){.topnav{display:none}}
